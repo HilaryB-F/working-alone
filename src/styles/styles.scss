@@ -1,0 +1,11 @@
+@import "./partials/variables";
+@import "./partials/resets";
+@import "./partials/typography";
+
+@import "../pages/Landing.scss";
+@import "../components/Login/Login.scss";
+@import "../components/Header/Header.scss";
+@import "../pages/Homepage.scss";
+@import "../pages/NewSession.scss";
+@import "../pages/Checkin.scss";
+@import "../components/Clock/Clock.scss";

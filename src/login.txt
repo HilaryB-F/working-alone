@@ -1,0 +1,3 @@
+client d: 364886782421-josn0pjv1bq11v7tkjgj0a97rd0qtb03.apps.googleusercontent.com
+
+client secret: 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

@@ -1,0 +1,26 @@
+.homepage {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+  }
+
+  &__start {
+    padding: 1.5rem 1.5rem;
+    border-radius: 10px;
+    background-color: $blue;
+    color: $yellow;
+    font-size: 1.8rem;
+    border: 1px solid $softYellow;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    &:hover {
+      cursor: pointer;
+      color: $darkYellow;
+      background-color: $lightBlue;
+      border: 2px solid $softYellow;
+      box-shadow: none;
+    }
+  }
+}
