@@ -2,79 +2,114 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Help from "../../assets/icons/help.png";
 
-export default function Clock() {
-  const [timerHour, setTimerHour] = useState("00");
-  const [timerMin, setTimerMin] = useState("00");
-  const [timerSec, setTimerSec] = useState("00");
+// export default function Clock() {
+// const [timerHour, setTimerHour] = useState("00");
+// const [timerMin, setTimerMin] = useState("00");
+// const [timerSec, setTimerSec] = useState("00");
+//   let interval;
+//   const startTimer = () => {
+//     const countDownDate = new Date("December 31,2023").getTime();
+//     interval = setInterval(() => {
+//       const now = new Date().getTime();
+//       const distance = countDownDate - now;
+//       const hour = Math.floor(
+//         (distance % (24 * 60 * 60 * 1000)) / (1000 * 60 * 60)
+//       );
+//       const min = Math.floor((distance % (60 * 60 * 1000)) / (1000 * 60));
+//       const sec = Math.floor((distance % (60 * 1000)) / 1000);
+//       if (distance < 0) {
+//         clearInterval(interval.current);
+//       } else {
+//         setTimerHour(hour);
+//         setTimerMin(min);
+//         setTimerSec(sec);
+//       }
+//     });
+//   };
+// useEffect(() => {
+//   startTimer();
+// });
+//   useEffect(() => {
+//     const intervalId = setInterval(() => {
+//       updateRemainingTime();
+//     }, 1000);
+//     return () => clearInterval(intervalId);
+//   }, []);
+//   function updateRemainingTime() {
+//     console.log("Hello World");
+//   }
+// return (
 
-  //   let interval;
+// );
 
-  //   const startTimer = () => {
-  //     const countDownDate = new Date("December 31,2023").getTime();
+// }
+const CountdownTimer = () => {
+  const [timeRemaining, setTimeRemaining] = useState(60 * 60);
+  const [isRunning, setIsRunning] = useState(true);
 
-  //     interval = setInterval(() => {
-  //       const now = new Date().getTime();
+  useEffect(() => {
+    let timer = null;
 
-  //       const distance = countDownDate - now;
+    if (isRunning) {
+      timer = setInterval(() => {
+        setTimeRemaining((prevTime) => {
+          const newTime = prevTime - 1;
 
-  //       const hour = Math.floor(
-  //         (distance % (24 * 60 * 60 * 1000)) / (1000 * 60 * 60)
-  //       );
-  //       const min = Math.floor((distance % (60 * 60 * 1000)) / (1000 * 60));
-  //       const sec = Math.floor((distance % (60 * 1000)) / 1000);
+          if (newTime <= 0) {
+            setIsRunning(false);
+            setTimeRemaining(0);
+            alert("Check in time!");
+          }
 
-  //       if (distance < 0) {
-  //         clearInterval(interval.current);
-  //       } else {
-  //         setTimerHour(hour);
-  //         setTimerMin(min);
-  //         setTimerSec(sec);
-  //       }
-  //     });
-  //   };
+          return newTime;
+        });
+      }, 1000);
+    }
 
-  // useEffect(() => {
-  //   startTimer();
-  // });
-  //   useEffect(() => {
-  //     const intervalId = setInterval(() => {
-  //       updateRemainingTime();
-  //     }, 1000);
-  //     return () => clearInterval(intervalId);
-  //   }, []);
+    return () => clearInterval(timer);
+  }, [isRunning]);
 
-  //   function updateRemainingTime() {
-  //     console.log("Hello World");
-  //   }
+  const restartTimer = () => {
+    setTimeRemaining(60 * 60);
+    setIsRunning(true);
+  };
 
+  const stopTimer = () => {
+    setIsRunning(false);
+  };
+
+  const formatTime = () => {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+  const phoneNumber = "000000000"; // Replace with the desired phone number
+
+  const handleCallButtonClick = () => {
+    const phoneUrl = `tel:${phoneNumber}`;
+    console.log("Calling emergency contact");
+    window.location.href = phoneUrl;
+  };
   return (
     <>
       <section className="clock__container">
         <section className="clock__timer">
-          <div className="clock__clock">
-            <section className="clock__number">
-              <p className="clock__number-time">{timerHour}</p>
-              <label className="clock__number-label">Hours</label>
-            </section>
-            <span className="clock__number-break">:</span>
-            <section className="clock__number">
-              <p className="clock__number-time">{timerMin}</p>
-              <label className="clock__number-label">Minutes</label>
-            </section>
-            <span className="clock__number-break">:</span>
-            <section className="clock__number">
-              <p className="clock__number-time">{timerSec}</p>
-              <label className="clock__number-label">Seconds</label>
-            </section>
-          </div>
+          <h1 className="clock__number-time">{formatTime()}</h1>
         </section>
       </section>
       <section className="clock__buttons-container">
         <section className="clock__buttons">
-          <button className="clock__buttons-checkin">Checkin</button>
-          <button className="clock__buttons-stop">Stop</button>
+          <button onClick={restartTimer} className="clock__buttons-checkin">
+            Checkin
+          </button>
+          <button onClick={stopTimer} className="clock__buttons-stop">
+            Stop
+          </button>
         </section>
-        <button className="clock__buttons-help">
+        <button onClick={handleCallButtonClick} className="clock__buttons-help">
           <img
             className="clock__buttons-help-icon"
             src={Help}
@@ -85,4 +120,6 @@ export default function Clock() {
       </section>
     </>
   );
-}
+};
+
+export default CountdownTimer;
