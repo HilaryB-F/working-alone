@@ -4,7 +4,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 80vh;
+    border: 5px solid $blue;
   }
   &__logo {
     width: 80%;
